@@ -46,10 +46,28 @@ def light(light_dir, process_dir, hasflats=True, hasdarks=True):
     app.Execute("register bkg_pp_light")
     app.Execute("stack r_bkg_pp_light rej 3 3 -norm=addscale -output_norm -out=../result")
     app.Execute("close")
-    
-# ==============================================================================
 
-work_dir     = "C:/Users/dave/Desktop/thor"
+def verify_work_dir(work_dir):
+    if (not os.path.isdir(work_dir)) or (len(os.listdir(work_dir)) == 0):
+        print ("Work directory does not exist")
+        sys.exit()
+
+    if (not os.path.isdir(os.path.join(work_dir,'lights'))) or (len(os.path.join(work_dir,'lights')) == 0):
+        print ("Lights directory does not exist or is empty")
+        sys.exit()
+    
+# =============================================================================
+try:
+    if (sys.argv[1]=='help' or sys.argv[1]=='--help' or sys.argv[1]=='h' or sys.argv[1]=='-h'):
+        print("\nUsage: python process.py <full directory to process\n")
+        sys.exit()
+except Exception as e:
+    print("\nUsage: python process.py <full directory to process\n")
+    sys.exit()
+
+work_dir = os.path.abspath(sys.argv[1])
+verify_work_dir(work_dir)
+
 
 app=Siril()
 
@@ -59,11 +77,11 @@ try:
     app.Execute("set32bits")
     app.Execute("setext fit")
     
-    process_dir = work_dir+ '/process'
-    flats_dir   = work_dir+ '/flats'
-    darks_dir   = work_dir+ '/darks'
-    biases_dir  = work_dir+ '/biases'
-    lights_dir  = work_dir+ '/lights'
+    process_dir = os.path.join(work_dir, 'process')
+    flats_dir   = os.path.join(work_dir, 'flats')
+    darks_dir   = os.path.join(work_dir, 'darks')
+    biases_dir  = os.path.join(work_dir, 'biases')
+    lights_dir  = os.path.join(work_dir, 'lights')
     
     if (os.path.isdir(flats_dir)) and (len(os.listdir(flats_dir)) > 0): 
         hasflats=True
