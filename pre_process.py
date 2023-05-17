@@ -44,7 +44,7 @@ def light(light_dir, process_dir, hasflats=True, hasdarks=True):
     app.Execute("calibrate light -bias=bias_stacked " + dark_switch + flat_switch + " -cfa -equalize_cfa -debayer" )
     app.Execute("seqsubsky pp_light 1")
     app.Execute("register bkg_pp_light")
-    app.Execute("stack r_bkg_pp_light rej 3 3 -norm=addscale -output_norm -out=../result")
+    app.Execute("stack r_bkg_pp_light rej s 3 3 -norm=addscale -output_norm -out=../result")
     app.Execute("close")
 
 def verify_work_dir(work_dir):
