@@ -59,10 +59,10 @@ def verify_work_dir(work_dir):
 # =============================================================================
 try:
     if (sys.argv[1]=='help' or sys.argv[1]=='--help' or sys.argv[1]=='h' or sys.argv[1]=='-h'):
-        print("\nUsage: python process.py <full directory to process\n")
+        print("\nUsage: python pre_process.py <full directory to process\n")
         sys.exit()
 except Exception as e:
-    print("\nUsage: python process.py <full directory to process\n")
+    print("\nUsage: python pre_process.py <full directory to process\n")
     sys.exit()
 
 work_dir = os.path.abspath(sys.argv[1])
